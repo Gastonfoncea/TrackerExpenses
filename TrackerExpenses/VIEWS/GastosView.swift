@@ -23,11 +23,11 @@ struct GastosView: View {
                         .bold()
                     Text("Tus Gastos acumulados")
                         .padding(.top,3)
-                        .font(.system(size: 17))
+                        .font(.system(size: Apptheme.fontSizeSubTitles2))
                         .bold()
                     Text(tarjetasViewModel.getFormattedDate())
                         .padding(.top,3)
-                        .font(.system(size: 17))
+                        .font(.system(size: Apptheme.fontSizeSubTitles2))
                         .bold()
                 }
                 .frame(maxWidth: .infinity, alignment: .center)

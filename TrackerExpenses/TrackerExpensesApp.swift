@@ -14,6 +14,5 @@ struct TrackerExpensesApp: App {
         WindowGroup {
             Home()
         }
-        .modelContainer(for: Registros.self)
     }
 }

@@ -11,6 +11,9 @@ import SwiftData
 struct Home: View {
     
     @StateObject var tarjetasViewModel = TarjetasViewModel()
+    @StateObject var vmRegistros = RegistrosViewModel()
+    @Environment(\.modelContext) var context
+    
     @Query(filter: #Predicate<Registros>{$0.tipo == "Ingresos" },sort:\Registros.fecha) var registrosI: [Registros]
     @Query(filter: #Predicate<Registros>{$0.tipo == "Gastos"}, sort: \Registros.fecha) var registrosG: [Registros]
     @Query(filter: #Predicate<Registros> {$0.tipo == "Ahorros"}, sort: \Registros.fecha) var registrosA: [Registros]
@@ -23,6 +26,7 @@ struct Home: View {
                         .frame(height: 700)
                         .ignoresSafeArea(.all)
                     VStack{
+                        
                         HStack{
                             Text(tarjetasViewModel.getFormattedDate())
                                 .foregroundStyle(.white)
@@ -33,18 +37,19 @@ struct Home: View {
                         
                         HStack{
                             Text("Balance Mensual")
-                                .font(.system(size: 17))
+                                .font(.system(size: Apptheme.fontSizeSubTitles2))
                                 .foregroundStyle(.white)
                                 .bold()
                             Spacer()
                         }
                         .padding(.top,10)
-                        HStack{
+                        
+                        HStack {
                             let ingresos = tarjetasViewModel.calcularSuma(registros:registrosI)
                             let gastos = tarjetasViewModel.calcularSuma(registros:registrosG)
                             let balance = ingresos - gastos
-                
-                            Text("\(balance)")
+                     
+                            Text("$ \(vmRegistros.sumatoriaIngresos())")
                                 .font(.system(size: 40))
                                 .foregroundStyle(Color.white)
                                 .bold()
@@ -54,7 +59,6 @@ struct Home: View {
                     }
                     .padding(.horizontal,30)
                     .offset(y:100)
-                    
                 }
                .frame(height: 150)
                
@@ -63,55 +67,50 @@ struct Home: View {
                         RoundedRectangle(cornerRadius: 20)
                             .fill(.white)
                             .frame(height: 800)
+                        
                         VStack{
                             HStack{
                                 Text("Detalle Mensual")
                                     .padding(.leading,30)
                                     .padding(.bottom)
-                                    .font(.system(size: 17))
+                                    .font(.system(size: Apptheme.fontSizeSubTitles2))
                                     .bold()
                                 Spacer()
                             }
+                            
                             HStack{
-                                NavigationLink(destination:IngresosView()) {
+                                NavigationLink(destination: IngresosView()) {
                                     CardExpense(color: .blue, motivo: "Ingresos", monto: tarjetasViewModel.calcularSuma(registros:registrosI), icono: "dock.arrow.down.rectangle")
                                 }
                                
-                                NavigationLink {
-                                    RegistroView(motivo: "Ingresos")
-                                } label: {
-                                    ButtonPlus(color: .blue)
+                                NavigationLink(destination: RegistroView(motivo: "Ingresos")) { ButtonPlus(color: .blue)
                                 }
                             }
+                            
                             HStack{
-                                NavigationLink(destination:GastosView()){
+                                NavigationLink(destination: GastosView()){
                                     CardExpense(color: .red, motivo: "Gastos", monto: tarjetasViewModel.calcularSuma(registros:registrosG), icono: "takeoutbag.and.cup.and.straw.fill")
                                 }
-                                NavigationLink {
-                                    RegistroView(motivo: "Gastos")
-                                } label: {
+                                
+                                NavigationLink(destination: RegistroView(motivo: "Gastos")) {
                                     ButtonPlus(color: .red)
                                 }
                             }
+                            
                             HStack{
-                                NavigationLink(destination:AhorrosView()) {
+                                NavigationLink(destination: AhorrosView()) {
                                     CardExpense(color: .yellow, motivo: "Ahorros", monto: tarjetasViewModel.calcularSuma(registros:registrosA), icono: "handbag.fill")
                                 }
-                                NavigationLink {
-                                    RegistroView(motivo: "Ahorros")
-                                } label: {
+                                NavigationLink(destination: RegistroView(motivo: "Ahorros")) {
                                     ButtonPlus(color: .yellow)
                                 }
                             }
                         }
                         .offset(y:-200)
-                        
                     }
-
                 }
                 .offset(y:110)
             }
-            
         }
     }
 }

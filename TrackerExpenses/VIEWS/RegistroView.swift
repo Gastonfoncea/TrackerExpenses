@@ -11,38 +11,65 @@ struct RegistroView: View {
     @StateObject var viewModelCalculadora = ViewModelCalculadora()
     @StateObject var viewModelTarjetas = TarjetasViewModel()
     var motivo: String
+    @State private var larger = true
     @Environment (\.dismiss) private var dismiss
     
     var body: some View {
         // MARK: HACER LA MISMA VISTA QUE EN REGISTRO PART 2 NEW
-            VStack{
-                Spacer()
-                HStack{
-                    Spacer()
-                    Text("$ \(viewModelCalculadora.textfieldValue)")
-                        .font(.system(size: 55))
-                        .padding(.trailing,30)
+        
+        VStack{
+            Color.accentColor1
+                .ignoresSafeArea(.all)
+                .overlay {/// aca creamos la vista del fondo azul----------------------
+                    HStack{
+                        Spacer()
+                        Text("$ \(viewModelCalculadora.textfieldValue)")
+                            .font(.system(size: 55))
+                            .padding(.trailing,20)
+                            .foregroundStyle(.white)
+                        Button(action: {
+                            if !viewModelCalculadora.textfieldValue.isEmpty{
+                                viewModelCalculadora.textfieldValue = String(viewModelCalculadora.textfieldValue.dropLast())
+                            }
+                            
+                        }, label: {
+                            Image(systemName: "delete.backward.fill")
+                                .font(.system(size: 35))
+                                .foregroundStyle(.gray)
+                                .padding(.trailing,10)
+                        })
+                       
+                    }
+                    .padding(.bottom,-150)
                 }
-                .padding(.bottom,-150)
-
-                Spacer()
-                VerticalButtonStack(
-                    viewModelCalculadora: viewModelCalculadora,
-                    data: Matrix.dataSection, width: 400)
-                .padding(.top,50)
-                Spacer()
-                
-                NavigationLink(destination: RegistroPart2New(viewModelCalculadora: viewModelCalculadora, motivo: motivo)) {
-                    ButtonGeneralNavigation(color: .blue, text: "Continuar")
-                }
- 
+            
+            ZStack{
+                    WhiteCard()
+                    .overlay {
+                        VStack{
+                            VerticalButtonStack(
+                                viewModelCalculadora: viewModelCalculadora,
+                                data: Matrix.dataSection, width: 400)
+                            .padding(.top,50)
+                            Spacer()
+                            NavigationLink(destination: RegistroPart2New(vmCalculadora: viewModelCalculadora, motivo: motivo)) {
+                                ButtonGeneralNavigation(color: .blue, text: "Continuar")
+                                    .opacity(viewModelCalculadora.textfieldValue.count < 1 ? 0 : 1)
+                                    .animation(.easeInOut(duration: 0.5), value:larger)
+                            }.onAppear{
+                                larger = false
+                            }
+                        }
+                    }
             }
-            .navigationTitle(motivo)
-            .onAppear{
-                if viewModelCalculadora.autoGuardado == true {
-                    dismiss()
-                }
+        }
+        .background(Color.accentColor1)
+        .navigationTitle(motivo)
+        .onAppear{
+            if viewModelCalculadora.autoGuardado == true {
+                dismiss()
             }
+        }
     }
 }
 

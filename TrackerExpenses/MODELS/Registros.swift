@@ -17,11 +17,13 @@ class Registros {
     var monto: String
     var detalle: String
     var fecha: Date
+    var categoria: String
     
-    init(tipo: String, monto: String, detalle: String, fecha: Date) {
+    init(tipo: String, monto: String, detalle: String, fecha: Date, categoria: String) {
         self.tipo = tipo
         self.monto = monto
         self.detalle = detalle
         self.fecha = fecha
+        self.categoria = categoria
     }
 }

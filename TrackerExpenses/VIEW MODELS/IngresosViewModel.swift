@@ -12,6 +12,6 @@ class IngresosViewModel: ObservableObject {
     
     @Published var sumatoria: String = ""
     
-    
+     var ingresosPicker: [String] = ["Sueldo 💵","Negocios 💻","Otros❔"]
     
 }

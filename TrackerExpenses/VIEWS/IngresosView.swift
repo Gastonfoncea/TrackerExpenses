@@ -23,11 +23,11 @@ struct IngresosView: View {
                         .bold()
                     Text("Tus Ingresos acumulados")
                         .padding(.top,3)
-                        .font(.system(size: 17))
+                        .font(.system(size: Apptheme.fontSizeSubTitles2))
                         .bold()
                     Text(tarjetasViewModel.getFormattedDate())
                         .padding(.top,3)
-                        .font(.system(size: 17))
+                        .font(.system(size: Apptheme.fontSizeSubTitles2))
                         .bold()
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
@@ -55,9 +55,4 @@ struct IngresosView: View {
 #Preview {
     IngresosView()
 }
-//                    HStack{
-//                        Text(registro.detalle)
-//                        Spacer()
-//                        Text("$ \(registro.monto)")
-//
-//                    }
+

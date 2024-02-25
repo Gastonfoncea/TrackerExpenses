@@ -16,14 +16,16 @@ struct KeyboardButton: Hashable {
     let type: ButtonType
 }
 
-enum ButtonType:Hashable {
+enum ButtonType: Hashable {
     case number(Int)
     case operation(OperationType)
     case result
     case reset
 }
 
-enum OperationType:Hashable {
+enum OperationType: Hashable {
     case suma
     case multiplicacion
+    case division
+    case resta
 }

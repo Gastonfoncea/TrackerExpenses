@@ -23,13 +23,10 @@ struct SumatoriaPrueba: View {
                 Text(registro.monto)}
             
         }
-        
-        
     }
     
     func calcularSuma(registros: [Registros]) -> Int {
         return registros.reduce(0) { $0 + (Int($1.monto) ?? 0) }
-        
     }
 }
 

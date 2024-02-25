@@ -10,13 +10,22 @@ import SwiftData
 
 
 struct RegistroPart2New: View {
-    @ObservedObject var viewModelCalculadora: ViewModelCalculadora
+    
+    @ObservedObject var vmCalculadora: ViewModelCalculadora
+    @StateObject var vmIngresos = IngresosViewModel()
+    @StateObject var vmGastos = GastosViewModel()
+    @StateObject var vmAhorros = AhorrosVIewModel()
+   // @StateObject var vmRegistro = RegistrosViewModel()
     var motivo: String
     @State var textFieldText: String = ""
     @State var date: Date = .now
-    var registro: [Registros] = []
+    @State private var larger = true
     @Environment (\.dismiss) private var dismiss
-    @Environment(\.modelContext) var context
+    @State var selected = "Sueldo"
+
+
+    
+    
     
     var body: some View {
         VStack{
@@ -24,58 +33,80 @@ struct RegistroPart2New: View {
                 .ignoresSafeArea(.all)
                 .overlay {/// aca creamos la vista del fondo azul----------------------
                     VStack{
-                        Text("Valor del ingreso:")
-                            .font(.system(size: 20))
+                        Text("Valor del \(String(motivo.dropLast())):")
+                            .font(.system(size: Apptheme.fontSizeSubTitles1))
                             .foregroundStyle(.white)
                             .bold()
                             .padding(.bottom)
-                        Text("$ \(viewModelCalculadora.textfieldValue)")
+                        Text("$ \(vmCalculadora.textfieldValue)")
                             .font(.system(size: 55))
                             .padding(.trailing,30)
                             .foregroundStyle(.white)
                     }
                 }
             ZStack{
-                RoundedRectangle(cornerRadius: 20)
-                    .fill(.white)
-                    .ignoresSafeArea(.all)
-                    .frame(height: 520)
+                    WhiteCard()
                     .overlay { /// aca creamos la vista del fondo blanco----------------------
-                        VStack{
+                        
+                        VStack(spacing: 20) {
                             HStack{
-                                Text("Detalle del ingreso")
-                                    .font(.system(size: 17))
+                                Text("Detalle del \(String(motivo.dropLast()))")
+                                    .font(.system(size: Apptheme.fontSizeSubTitles2))
                                 Spacer()
                             }
                             .padding(.top)
                             .padding(.horizontal)
-                            TextfieldGeneral(nombreTextfield: "Escribi una descripcion del gasto", referencia: $textFieldText)
-                            DatePicker("Fecha", selection: $date, displayedComponents: .date)
-                                .padding()
                             
-                            // MARK: PICKER PARA SELECCIONAR CATEGORIA
+                            TextfieldGeneral(nombreTextfield: "Escribi una descripcion del gasto", referencia: $textFieldText)
+                            
+                            DatePicker("Fecha", selection: $date, displayedComponents: .date)
+                                .font(.system(size: Apptheme.fontSizeSubTitles2))
+                                .padding(.horizontal)
+                            
+                            Picker("Categoria", selection: $selected) {
+                                switch motivo {
+                                case "Ingresos":
+                                    ForEach(vmIngresos.ingresosPicker, id: \.self) {option in
+                                        Text(option)
+                                    }
+                                case "Gastos":
+                                    ForEach(vmGastos.gastosPicker, id: \.self) {option in
+                                        Text(option)
+                                    }
+                                case "Ahorros":
+                                    ForEach(vmAhorros.ahorrosPicker, id: \.self) {option in
+                                        Text(option)
+                                    }
+                                default:
+                                    Text("")
+                                }
+                            }
+                            .pickerStyle(SegmentedPickerStyle())
+                            .padding(.top)
                             
                             Spacer()
+                            
                             VStack{
                                 Button {
-                                    ///creamos y guardamos el registro en swiftdata
-                                    let registroSwiftData = Registros(tipo: motivo, monto: viewModelCalculadora.textfieldValue, detalle: textFieldText, fecha: date)
-                                    ///insertamos la variable creada en la clase de swiftdata que creamos
-                                    context.insert(registroSwiftData)
-                                    viewModelCalculadora.autoGuardado.toggle()
+                                    RegistrosViewModel.shared.saveRegistro(tipo: motivo,
+                                                            monto: vmCalculadora.textfieldValue, detalle: textFieldText,
+                                                                fecha: date,
+                                                                categoria: selected)
+                                    
+                                    vmCalculadora.autoGuardado.toggle()
                                     dismiss()
                                     
                                 } label: {
                                     ButtonGeneralNavigation(color: .blue, text: "Listo")
                                         .opacity(textFieldText.count < 1 ? 0 : 1)
-                                        .animation(Animation.easeInOut(duration: 1.0))
-                                    
+                                        .animation(.easeInOut(duration: 0.7),value: larger)
+                                }.onAppear{
+                                    larger = false
                                 }
                             }
                         }
                         .padding(.top)
                         .padding(.horizontal)
-                        
                     }
             }
         }
@@ -84,5 +115,5 @@ struct RegistroPart2New: View {
 }
 
 #Preview {
-    RegistroPart2New(viewModelCalculadora: ViewModelCalculadora(), motivo: "Ingresos")
+    RegistroPart2New(vmCalculadora: ViewModelCalculadora(), motivo: "Ingresos")
 }

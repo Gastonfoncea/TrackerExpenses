@@ -10,9 +10,8 @@ import Foundation
 
 final class ViewModelCalculadora: ObservableObject {
 
-    
     @Published var textfieldValue: String = ""
-    @Published var autoGuardado:Bool = false
+    @Published var autoGuardado: Bool = false
     
     var textFieldSavedValue: String = "0"
     var currentOperationToExecute: OperationType?
@@ -45,6 +44,12 @@ final class ViewModelCalculadora: ObservableObject {
                 
             case .multiplicacion:
                 textfieldValue = "\(Int(textfieldValue)! * Int(textFieldSavedValue)!)"
+                
+            case .division:
+                textfieldValue = "\(Int(textfieldValue)! % Int(textFieldSavedValue)!)"
+                
+            case .resta:
+                textfieldValue = "\(Int(textfieldValue)! - Int(textFieldSavedValue)!)"
                 
             }
             
