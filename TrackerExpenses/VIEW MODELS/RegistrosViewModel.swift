@@ -12,6 +12,13 @@ import SwiftUI
 
 class RegistrosViewModel: ObservableObject {
     
+    @Published var registros: [Registros] = []
+    
+    //traeremos los registros completos
+    //buscaremos la forma de filtrarlos
+    //trabajaremos con los registros
+    
+    
     private let modelContainer: ModelContainer
     private let modelContext: ModelContext
     
@@ -34,7 +41,7 @@ class RegistrosViewModel: ObservableObject {
         
     }
     
-
+        /// BALANCE
         func sumatoriaIngresos() -> Int {
          
         var total = 0
@@ -58,18 +65,44 @@ class RegistrosViewModel: ObservableObject {
         return total
     }
     
+    
     enum tipo {
         case ingresos
         case gastos
         case ahorros
+    }
+    
+    
+    func sumarRegistrosPorTipo(tipo:tipo) -> Int {
         
+        switch tipo {
+        case .ingresos:
+            let ingresosPredicate = #Predicate<Registros> {  $0.tipo == "Ingresos" }
+            let ingresosDescriptor = FetchDescriptor<Registros>(predicate: ingresosPredicate)
+            let ingresos = try! modelContext.fetch(ingresosDescriptor)
+            let ingresosCalculo = ingresos.reduce(0) { $0 + (Int($1.monto) ?? 0 )}
+            return ingresosCalculo
+            
+        case .gastos:
+            let gastosPredicate = #Predicate<Registros> { $0.tipo == "Gastos" }
+            let gastosDescriptor = FetchDescriptor<Registros> (predicate: gastosPredicate)
+            let gastos = try! modelContext.fetch(gastosDescriptor)
+            let gastosCalculo = gastos.reduce(0) { $0 + (Int($1.monto) ?? 0 )}
+            return gastosCalculo
+            
+        case .ahorros:
+            let ahorrosPredicate = #Predicate<Registros> { $0.tipo == "Ahorros" }
+            let ahorrosDescriptor = FetchDescriptor<Registros> (predicate: ahorrosPredicate)
+            let ahorros = try! modelContext.fetch(ahorrosDescriptor)
+            let ahorrosCalculo = ahorros.reduce(0) { $0 + (Int($1.monto) ?? 0 )}
+            return ahorrosCalculo
+        }
     }
     
 
-    func fetchRegistros(tipo: tipo) ->[Registros] {
+    func fetchRegistros(tipo: tipo) -> [Registros] {
         
         switch tipo{
-            
         case .ingresos:
             ///Busqueda FetchDescriptor y predicate en la base de datos de SwiftData - Ingresos
             let ingresosPredicate = #Predicate<Registros> {  $0.tipo == "Ingresos" }
@@ -78,12 +111,14 @@ class RegistrosViewModel: ObservableObject {
             return ingresos
             
         case .gastos:
+            ///Busqueda FetchDescriptor y predicate en la base de datos de SwiftData - Gastos
             let gastosPredicate = #Predicate<Registros> { $0.tipo == "Gastos" }
             let gastosDescriptor = FetchDescriptor<Registros> (predicate: gastosPredicate)
             let gastos = try! modelContext.fetch(gastosDescriptor)
             return gastos
             
         case .ahorros:
+            ///Busqueda FetchDescriptor y predicate en la base de datos de SwiftData - Ahorros
             let ahorrosPredicate = #Predicate<Registros> { $0.tipo == "Ahorros" }
             let ahorrosDescriptor = FetchDescriptor<Registros> (predicate: ahorrosPredicate)
             let ahorros = try! modelContext.fetch(ahorrosDescriptor)

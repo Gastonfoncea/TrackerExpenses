@@ -46,9 +46,9 @@ struct Home: View {
                         .padding(.top,10)
                         
                         HStack {
-                            let ingresos = tarjetasViewModel.calcularSuma(registros:registrosI)
-                            let gastos = tarjetasViewModel.calcularSuma(registros:registrosG)
-                            let _ = ingresos - gastos
+                            //let ingresos = tarjetasViewModel.calcularSuma(registros:registrosI)
+                            //let gastos = tarjetasViewModel.calcularSuma(registros:registrosG)
+                            //let _ = ingresos - gastos
                      
                             Text("$ \(vmRegistros.sumatoriaIngresos())")
                                 .font(.system(size: 40))

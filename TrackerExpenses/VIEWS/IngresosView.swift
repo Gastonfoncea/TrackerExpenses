@@ -13,12 +13,13 @@ struct IngresosView: View {
     @Query(filter: #Predicate<Registros>{$0.tipo == "Ingresos" },sort:\Registros.fecha) var registros: [Registros]
     @Environment(\.modelContext) var context
     @StateObject var tarjetasViewModel = TarjetasViewModel()
+    @StateObject var vmRegistros = RegistrosViewModel()
     
     var body: some View {
         VStack{
             List{
                 VStack{
-                    Text("$\(tarjetasViewModel.calcularSuma(registros:registros))")
+                    Text("$\(vmRegistros.sumarRegistrosPorTipo(tipo: .ingresos))")
                         .font(.largeTitle)
                         .bold()
                     Text("Tus Ingresos acumulados")
@@ -36,7 +37,7 @@ struct IngresosView: View {
                 
                 
                 ///Recorremos la lista de los registros guardados en swiftData
-                ForEach(registros) {registro in
+                ForEach(vmRegistros.fetchRegistros(tipo: .ingresos)) {registro in
                     ListItems(name: registro.detalle, motivo: registro.tipo, fecha: registro.fecha, monto:tarjetasViewModel.StringToInt(valor: registro.monto), color: Color.greenColor1)
                 }
                 .onDelete{ indexSet in
