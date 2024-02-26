@@ -34,6 +34,7 @@ struct IngresosView: View {
                 .listRowSeparator(.hidden, edges: .top)
                 .padding(.vertical, 16)
                 
+                
                 ///Recorremos la lista de los registros guardados en swiftData
                 ForEach(registros) {registro in
                     ListItems(name: registro.detalle, motivo: registro.tipo, fecha: registro.fecha, monto:tarjetasViewModel.StringToInt(valor: registro.monto), color: Color.greenColor1)

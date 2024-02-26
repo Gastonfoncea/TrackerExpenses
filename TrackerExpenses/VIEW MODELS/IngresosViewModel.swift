@@ -10,8 +10,8 @@ import SwiftData
 
 class IngresosViewModel: ObservableObject {
     
-    @Published var sumatoria: String = ""
+    @Published var ingresos: [Registros] = []
     
-     var ingresosPicker: [String] = ["Sueldo 💵","Negocios 💻","Otros❔"]
+    var ingresosPicker: [String] = ["Sueldo 💵","Negocios 💻","Otros❔"]
     
 }

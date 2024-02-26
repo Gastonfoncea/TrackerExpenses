@@ -13,6 +13,7 @@ struct Home: View {
     @StateObject var tarjetasViewModel = TarjetasViewModel()
     @StateObject var vmRegistros = RegistrosViewModel()
     @Environment(\.modelContext) var context
+    @StateObject var vmIngresos = IngresosViewModel()
     
     @Query(filter: #Predicate<Registros>{$0.tipo == "Ingresos" },sort:\Registros.fecha) var registrosI: [Registros]
     @Query(filter: #Predicate<Registros>{$0.tipo == "Gastos"}, sort: \Registros.fecha) var registrosG: [Registros]
@@ -47,7 +48,7 @@ struct Home: View {
                         HStack {
                             let ingresos = tarjetasViewModel.calcularSuma(registros:registrosI)
                             let gastos = tarjetasViewModel.calcularSuma(registros:registrosG)
-                            let balance = ingresos - gastos
+                            let _ = ingresos - gastos
                      
                             Text("$ \(vmRegistros.sumatoriaIngresos())")
                                 .font(.system(size: 40))
@@ -81,6 +82,9 @@ struct Home: View {
                             HStack{
                                 NavigationLink(destination: IngresosView()) {
                                     CardExpense(color: .blue, motivo: "Ingresos", monto: tarjetasViewModel.calcularSuma(registros:registrosI), icono: "dock.arrow.down.rectangle")
+                                }
+                                .onTapGesture {
+                                    vmIngresos.ingresos = vmRegistros.fetchRegistros(tipo: .ingresos)
                                 }
                                
                                 NavigationLink(destination: RegistroView(motivo: "Ingresos")) { ButtonPlus(color: .blue)
