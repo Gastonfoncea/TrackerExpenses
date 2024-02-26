@@ -10,8 +10,6 @@ import SwiftData
 
 struct GastosView: View {
     
-    @Environment(\.modelContext) var context
-    @Query(filter: #Predicate<Registros>{$0.tipo == "Gastos"}, sort: \Registros.fecha) var registros: [Registros]
     @StateObject var tarjetasViewModel = TarjetasViewModel()
     @StateObject var vmRegistros = RegistrosViewModel()
     
@@ -40,7 +38,7 @@ struct GastosView: View {
                 }
                 .onDelete { indexSet in
                     for index in indexSet {
-                        context.delete(registros[index])
+                        vmRegistros.deleteRegistro(tipo: .gastos, index: index)
                     }
                 }
                 .listRowSeparator(.hidden)
@@ -49,6 +47,7 @@ struct GastosView: View {
             .scrollContentBackground(.hidden)
         }
     }
+    
 }
 
 #Preview {
