@@ -27,11 +27,14 @@ class RegistrosViewModel: ObservableObject {
     
     
     @MainActor
-        init() {
+    init() {
         self.modelContainer = try! ModelContainer(for: Registros.self)
         self.modelContext = modelContainer.mainContext
         
     }
+    
+    // MARK: FUNCIONES PRINCIPALES - CRUD - CREATE! - READ! - UPDATE - DELETE
+    //Falta update and delete
     
     func saveRegistro(tipo: String,monto: String,detalle: String,fecha: Date, categoria: String) {
         //creamos y guardamos el registro en swiftdata
@@ -41,11 +44,15 @@ class RegistrosViewModel: ObservableObject {
         
     }
     
-        /// BALANCE
-        func sumatoriaIngresos() -> Int {
-         
+    
+    
+    //MARK: FUNCIONES SECUNDARIAS: Balance ; FetchPorTipo ; sumarRegistrosPorTipo
+    
+    /// BALANCE
+    func sumatoriaIngresos() -> Int {
+        
         var total = 0
-         
+        
         ///Busqueda FetchDescriptor y predicate en la base de datos de SwiftData - Ingresos
         let ingresosPredicate = #Predicate<Registros> {  $0.tipo == "Ingresos" }
         let ingresosDescriptor = FetchDescriptor<Registros>(predicate: ingresosPredicate)
@@ -73,8 +80,33 @@ class RegistrosViewModel: ObservableObject {
     }
     
     
+    func fetchRegistros(tipo: tipo) -> [Registros] {
+        switch tipo{
+        case .ingresos:
+            ///Busqueda FetchDescriptor y predicate en la base de datos de SwiftData - Ingresos
+            let ingresosPredicate = #Predicate<Registros> {  $0.tipo == "Ingresos" }
+            let ingresosDescriptor = FetchDescriptor<Registros>(predicate: ingresosPredicate)
+            let ingresos = try! modelContext.fetch(ingresosDescriptor)
+            return ingresos
+            
+        case .gastos:
+            ///Busqueda FetchDescriptor y predicate en la base de datos de SwiftData - Gastos
+            let gastosPredicate = #Predicate<Registros> { $0.tipo == "Gastos" }
+            let gastosDescriptor = FetchDescriptor<Registros> (predicate: gastosPredicate)
+            let gastos = try! modelContext.fetch(gastosDescriptor)
+            return gastos
+            
+        case .ahorros:
+            ///Busqueda FetchDescriptor y predicate en la base de datos de SwiftData - Ahorros
+            let ahorrosPredicate = #Predicate<Registros> { $0.tipo == "Ahorros" }
+            let ahorrosDescriptor = FetchDescriptor<Registros> (predicate: ahorrosPredicate)
+            let ahorros = try! modelContext.fetch(ahorrosDescriptor)
+            return ahorros
+        }
+    }
+    
+    
     func sumarRegistrosPorTipo(tipo:tipo) -> Int {
-        
         switch tipo {
         case .ingresos:
             let ingresosPredicate = #Predicate<Registros> {  $0.tipo == "Ingresos" }
@@ -100,33 +132,6 @@ class RegistrosViewModel: ObservableObject {
     }
     
 
-    func fetchRegistros(tipo: tipo) -> [Registros] {
-        
-        switch tipo{
-        case .ingresos:
-            ///Busqueda FetchDescriptor y predicate en la base de datos de SwiftData - Ingresos
-            let ingresosPredicate = #Predicate<Registros> {  $0.tipo == "Ingresos" }
-            let ingresosDescriptor = FetchDescriptor<Registros>(predicate: ingresosPredicate)
-            let ingresos = try! modelContext.fetch(ingresosDescriptor)
-            return ingresos
-            
-        case .gastos:
-            ///Busqueda FetchDescriptor y predicate en la base de datos de SwiftData - Gastos
-            let gastosPredicate = #Predicate<Registros> { $0.tipo == "Gastos" }
-            let gastosDescriptor = FetchDescriptor<Registros> (predicate: gastosPredicate)
-            let gastos = try! modelContext.fetch(gastosDescriptor)
-            return gastos
-            
-        case .ahorros:
-            ///Busqueda FetchDescriptor y predicate en la base de datos de SwiftData - Ahorros
-            let ahorrosPredicate = #Predicate<Registros> { $0.tipo == "Ahorros" }
-            let ahorrosDescriptor = FetchDescriptor<Registros> (predicate: ahorrosPredicate)
-            let ahorros = try! modelContext.fetch(ahorrosDescriptor)
-            return ahorros
-            
-        }
-    }
-    
     
 }
 
