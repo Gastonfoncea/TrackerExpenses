@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct ContentView: View {
-  
+    @StateObject var vmRegistros = RegistrosViewModel()
     var body: some View {
         TabView{
-            Home()
+            Home(vmRegistros: vmRegistros)
                 .tabItem {
                     Label("Home", systemImage: "house")
                 }

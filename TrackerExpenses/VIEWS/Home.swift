@@ -11,7 +11,7 @@ import SwiftData
 struct Home: View {
     
     @StateObject var tarjetasViewModel = TarjetasViewModel()
-    @StateObject var vmRegistros = RegistrosViewModel()
+    @ObservedObject var vmRegistros: RegistrosViewModel
     @StateObject var vmIngresos = IngresosViewModel()
     @State var sumaIngresos = 0
     @State var sumaGastos = 0
