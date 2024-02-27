@@ -13,6 +13,7 @@ struct TrackerExpensesApp: App {
     var body: some Scene {
         WindowGroup {
             Home()
+               
         }
     }
 }

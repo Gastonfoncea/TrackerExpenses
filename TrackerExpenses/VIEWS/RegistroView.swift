@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct RegistroView: View {
+    
     @StateObject var viewModelCalculadora = ViewModelCalculadora()
     @StateObject var viewModelTarjetas = TarjetasViewModel()
+    @ObservedObject var vmRegistros: RegistrosViewModel
     var motivo: String
     @State private var larger = true
     @Environment (\.dismiss) private var dismiss
@@ -52,7 +54,7 @@ struct RegistroView: View {
                                 data: Matrix.dataSection, width: 400)
                             .padding(.top,50)
                             Spacer()
-                            NavigationLink(destination: RegistroPart2New(vmCalculadora: viewModelCalculadora, motivo: motivo)) {
+                            NavigationLink(destination: RegistroPart2New(vmCalculadora: viewModelCalculadora, vmRegistros: vmRegistros, motivo: motivo)) {
                                 ButtonGeneralNavigation(color: .blue, text: "Continuar")
                                     .opacity(viewModelCalculadora.textfieldValue.count < 1 ? 0 : 1)
                                     .animation(.easeInOut(duration: 0.5), value:larger)
@@ -74,5 +76,5 @@ struct RegistroView: View {
 }
 
 #Preview {
-    RegistroView(motivo: "Comida")
+    RegistroView(vmRegistros: RegistrosViewModel(), motivo: "Comida")
 }

@@ -11,13 +11,15 @@ import SwiftData
 struct IngresosView: View {
     
     @StateObject var tarjetasViewModel = TarjetasViewModel()
-    @StateObject var vmRegistros = RegistrosViewModel()
+    @ObservedObject var vmRegistros: RegistrosViewModel
+    @State var suma = 0
     
     var body: some View {
         VStack{
             List{
                 VStack{
-                    Text("$\(vmRegistros.sumarRegistrosPorTipo(tipo: .ingresos))")
+                  
+                    Text("$\(suma)") //vmRegistros.sumaIngresos
                         .font(.largeTitle)
                         .bold()
                     Text("Tus Ingresos acumulados")
@@ -38,21 +40,29 @@ struct IngresosView: View {
                 ForEach(vmRegistros.fetchRegistros(tipo: .ingresos)) {registro in
                     ListItems(name: registro.detalle, motivo: registro.tipo, fecha: registro.fecha, monto:tarjetasViewModel.StringToInt(valor: registro.monto), color: Color.greenColor1)
                 }
+                
                 .onDelete{ indexSet in
                     for index in indexSet {
                         vmRegistros.deleteRegistro(tipo: .ingresos, index: index)
+                        suma = vmRegistros.sumarRegistrosPorTipo(tipo: .ingresos)
+                    
                     }
+                    
                 }
                 .listRowSeparator(.hidden)
             }
             .listStyle(.plain)
             .scrollContentBackground(.hidden)
         }
+        .onAppear{
+            suma = vmRegistros.sumarRegistrosPorTipo(tipo: .ingresos)
+            
+        }
     }
  
 }
 
 #Preview {
-    IngresosView()
+    IngresosView(vmRegistros: RegistrosViewModel())
 }
 

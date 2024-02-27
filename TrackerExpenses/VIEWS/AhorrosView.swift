@@ -11,13 +11,13 @@ import SwiftData
 struct AhorrosView: View {
     
     @StateObject var tarjetasViewModel = TarjetasViewModel()
-    @StateObject var vmRegistros = RegistrosViewModel()
-    
+    @ObservedObject var vmRegistros: RegistrosViewModel
+    @State var suma = 0
     var body: some View {
         VStack{
             List{
                 VStack{
-                    Text("$\(vmRegistros.sumarRegistrosPorTipo(tipo: .ahorros))")
+                    Text("$\(suma)")
                         .font(.largeTitle)
                         .bold()
                     Text("Tus Ahorros acumulados")
@@ -39,14 +39,18 @@ struct AhorrosView: View {
                 .onDelete { indexSet in
                     for index in indexSet {
                         vmRegistros.deleteRegistro(tipo: .ahorros, index: index)
+                        suma = vmRegistros.sumarRegistrosPorTipo(tipo: .ahorros)
                     }
                 }  
             }
             .scrollContentBackground(.hidden)
         }
+        .onAppear{
+            suma = vmRegistros.sumarRegistrosPorTipo(tipo: .ahorros)
+        }
     }
 }
 
 #Preview {
-    AhorrosView()
+    AhorrosView(vmRegistros: RegistrosViewModel())
 }

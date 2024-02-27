@@ -12,12 +12,11 @@ struct Home: View {
     
     @StateObject var tarjetasViewModel = TarjetasViewModel()
     @StateObject var vmRegistros = RegistrosViewModel()
-    @Environment(\.modelContext) var context
     @StateObject var vmIngresos = IngresosViewModel()
+    @State var sumaIngresos = 0
+    @State var sumaGastos = 0
+    @State var sumaAhorros = 0
     
-    @Query(filter: #Predicate<Registros>{$0.tipo == "Ingresos" },sort:\Registros.fecha) var registrosI: [Registros]
-    @Query(filter: #Predicate<Registros>{$0.tipo == "Gastos"}, sort: \Registros.fecha) var registrosG: [Registros]
-    @Query(filter: #Predicate<Registros> {$0.tipo == "Ahorros"}, sort: \Registros.fecha) var registrosA: [Registros]
     
     var body: some View {
         NavigationView{
@@ -46,11 +45,8 @@ struct Home: View {
                         .padding(.top,10)
                         
                         HStack {
-                            //let ingresos = tarjetasViewModel.calcularSuma(registros:registrosI)
-                            //let gastos = tarjetasViewModel.calcularSuma(registros:registrosG)
-                            //let _ = ingresos - gastos
-                     
-                            Text("$ \(vmRegistros.sumatoriaIngresos())")
+                            
+                            Text("$ \(vmRegistros.total)")
                                 .font(.system(size: 40))
                                 .foregroundStyle(Color.white)
                                 .bold()
@@ -80,35 +76,35 @@ struct Home: View {
                             }
                             
                             HStack{
-                                NavigationLink(destination: IngresosView()) {
-                                    CardExpense(color: .blue, motivo: "Ingresos", monto: tarjetasViewModel.calcularSuma(registros:registrosI), icono: "dock.arrow.down.rectangle")
+                                NavigationLink(destination: IngresosView(vmRegistros: vmRegistros)) {
+                                    CardExpense(vmRegistros: vmRegistros, color: .blue, motivo: "Ingresos",icono: "dock.arrow.down.rectangle")
                                 }
-                                .onTapGesture {
-                                    vmIngresos.ingresos = vmRegistros.fetchRegistros(tipo: .ingresos)
-                                }
+                             
                                
-                                NavigationLink(destination: RegistroView(motivo: "Ingresos")) { ButtonPlus(color: .blue)
+                                NavigationLink(destination: RegistroView(vmRegistros: vmRegistros, motivo: "Ingresos")) { ButtonPlus(color: .blue)
                                 }
                             }
                             
                             HStack{
-                                NavigationLink(destination: GastosView()){
-                                    CardExpense(color: .red, motivo: "Gastos", monto: tarjetasViewModel.calcularSuma(registros:registrosG), icono: "takeoutbag.and.cup.and.straw.fill")
+                                NavigationLink(destination: GastosView(vmRegistros: vmRegistros)){
+                                    CardExpense(vmRegistros: vmRegistros, color: .red, motivo: "Gastos", icono: "takeoutbag.and.cup.and.straw.fill")
                                 }
                                 
-                                NavigationLink(destination: RegistroView(motivo: "Gastos")) {
+                                NavigationLink(destination: RegistroView(vmRegistros: vmRegistros, motivo: "Gastos")) {
                                     ButtonPlus(color: .red)
                                 }
                             }
                             
                             HStack{
-                                NavigationLink(destination: AhorrosView()) {
-                                    CardExpense(color: .yellow, motivo: "Ahorros", monto: tarjetasViewModel.calcularSuma(registros:registrosA), icono: "handbag.fill")
+                                NavigationLink(destination: AhorrosView( vmRegistros:vmRegistros)) {
+                                    CardExpense(vmRegistros: vmRegistros, color: .yellow, motivo: "Ahorros", icono: "handbag.fill")
                                 }
-                                NavigationLink(destination: RegistroView(motivo: "Ahorros")) {
+                                NavigationLink(destination: RegistroView(vmRegistros: vmRegistros, motivo: "Ahorros")) {
                                     ButtonPlus(color: .yellow)
                                 }
                             }
+                            
+                            Text("\(vmRegistros.sumaIngresos)")
                         }
                         .offset(y:-200)
                     }
@@ -116,8 +112,14 @@ struct Home: View {
                 .offset(y:110)
             }
         }
+        .onAppear{
+            vmRegistros.sumatoriaIngresos()
+            sumaIngresos = vmRegistros.sumarRegistrosPorTipo(tipo: .ingresos)
+            sumaGastos = vmRegistros.sumarRegistrosPorTipo(tipo: .gastos)
+            sumaAhorros = vmRegistros.sumarRegistrosPorTipo(tipo: .ahorros)
+        }
     }
 }
 #Preview {
-    Home()
+    Home(vmRegistros: RegistrosViewModel())
 }

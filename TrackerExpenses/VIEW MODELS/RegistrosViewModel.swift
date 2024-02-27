@@ -13,11 +13,12 @@ import SwiftUI
 class RegistrosViewModel: ObservableObject {
     
     @Published var registros: [Registros] = []
+    @Published var total = 0
+    @Published var sumaIngresos = 0
+    @Published var sumaGastos = 0
+    @Published var sumaAhorros = 0
     
-    //traeremos los registros completos
-    //buscaremos la forma de filtrarlos
-    //trabajaremos con los registros
-    
+
     
     private let modelContainer: ModelContainer
     private let modelContext: ModelContext
@@ -104,9 +105,7 @@ class RegistrosViewModel: ObservableObject {
     //MARK: FUNCIONES SECUNDARIAS: Balance ; FetchPorTipo ; sumarRegistrosPorTipo
     
     /// BALANCE
-    func sumatoriaIngresos() -> Int {
-        
-        var total = 0
+    func sumatoriaIngresos(){
         
         ///Busqueda FetchDescriptor y predicate en la base de datos de SwiftData - Ingresos
         let ingresosPredicate = #Predicate<Registros> {  $0.tipo == "Ingresos" }
@@ -124,7 +123,6 @@ class RegistrosViewModel: ObservableObject {
         
         total = ingresosCalculo - gastosCalculo
         print(total)
-        return total
     }
     
     
@@ -135,6 +133,7 @@ class RegistrosViewModel: ObservableObject {
             let ingresosDescriptor = FetchDescriptor<Registros>(predicate: ingresosPredicate)
             let ingresos = try! modelContext.fetch(ingresosDescriptor)
             let ingresosCalculo = ingresos.reduce(0) { $0 + (Int($1.monto) ?? 0 )}
+            sumaIngresos = ingresosCalculo
             return ingresosCalculo
             
         case .gastos:
@@ -142,6 +141,7 @@ class RegistrosViewModel: ObservableObject {
             let gastosDescriptor = FetchDescriptor<Registros> (predicate: gastosPredicate)
             let gastos = try! modelContext.fetch(gastosDescriptor)
             let gastosCalculo = gastos.reduce(0) { $0 + (Int($1.monto) ?? 0 )}
+            sumaGastos = gastosCalculo
             return gastosCalculo
             
         case .ahorros:
@@ -149,6 +149,7 @@ class RegistrosViewModel: ObservableObject {
             let ahorrosDescriptor = FetchDescriptor<Registros> (predicate: ahorrosPredicate)
             let ahorros = try! modelContext.fetch(ahorrosDescriptor)
             let ahorrosCalculo = ahorros.reduce(0) { $0 + (Int($1.monto) ?? 0 )}
+            sumaAhorros = ahorrosCalculo
             return ahorrosCalculo
         }
     }

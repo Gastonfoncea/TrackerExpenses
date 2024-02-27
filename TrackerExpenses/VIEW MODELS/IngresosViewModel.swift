@@ -10,8 +10,6 @@ import SwiftData
 
 class IngresosViewModel: ObservableObject {
     
-    @Published var ingresos: [Registros] = []
-    
     var ingresosPicker: [String] = ["Sueldo 💵","Negocios 💻","Otros❔"]
     
 }

@@ -12,6 +12,7 @@ import SwiftData
 struct RegistroPart2New: View {
     
     @ObservedObject var vmCalculadora: ViewModelCalculadora
+    @ObservedObject var vmRegistros : RegistrosViewModel
     @StateObject var vmIngresos = IngresosViewModel()
     @StateObject var vmGastos = GastosViewModel()
     @StateObject var vmAhorros = AhorrosVIewModel()
@@ -24,9 +25,6 @@ struct RegistroPart2New: View {
     @State var selected = "Sueldo"
 
 
-    
-    
-    
     var body: some View {
         VStack{
             Color.accentColor1
@@ -88,11 +86,14 @@ struct RegistroPart2New: View {
                             
                             VStack{
                                 Button {
-                                    RegistrosViewModel.shared.saveRegistro(tipo: motivo,
+                                    vmRegistros.saveRegistro(tipo: motivo,
                                                             monto: vmCalculadora.textfieldValue, detalle: textFieldText,
                                                                 fecha: date,
                                                                 categoria: selected)
-                                    
+                                    vmRegistros.sumatoriaIngresos()
+                                    vmRegistros.sumaIngresos = vmRegistros.sumarRegistrosPorTipo(tipo: .ingresos)
+                                    vmRegistros.sumaAhorros = vmRegistros.sumarRegistrosPorTipo(tipo: .ahorros)
+                                    vmRegistros.sumaGastos = vmRegistros.sumarRegistrosPorTipo(tipo: .gastos)
                                     vmCalculadora.autoGuardado.toggle()
                                     dismiss()
                                     
@@ -115,5 +116,5 @@ struct RegistroPart2New: View {
 }
 
 #Preview {
-    RegistroPart2New(vmCalculadora: ViewModelCalculadora(), motivo: "Ingresos")
+    RegistroPart2New(vmCalculadora: ViewModelCalculadora(), vmRegistros: RegistrosViewModel(), motivo: "Ingresos")
 }

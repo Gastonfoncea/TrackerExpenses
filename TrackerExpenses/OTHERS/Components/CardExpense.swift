@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct CardExpense: View {
+    
+    @ObservedObject var vmRegistros: RegistrosViewModel
     var color: Color
     var motivo: String
-    var monto: Int
     var icono: String
     
     var body: some View {
@@ -28,11 +29,25 @@ struct CardExpense: View {
                             .font(.system(size: 17))
                             .fontWeight(.semibold)
                             .foregroundStyle(color)
-                        Text("$\(monto)")
-                            .font(.system(size: 24))
-                            .bold()
-                            .padding(.top,2)
-                            .foregroundStyle(color)
+                        if motivo == "Ingresos" {
+                            Text("$\(vmRegistros.sumaIngresos)")
+                                .font(.system(size: 24))
+                                .bold()
+                                .padding(.top,2)
+                                .foregroundStyle(color)
+                        }else if motivo == "Gastos"{
+                            Text("$\(vmRegistros.sumaGastos)")
+                                .font(.system(size: 24))
+                                .bold()
+                                .padding(.top,2)
+                                .foregroundStyle(color)
+                        }else {
+                            Text("$\(vmRegistros.sumaAhorros)")
+                                .font(.system(size: 24))
+                                .bold()
+                                .padding(.top,2)
+                                .foregroundStyle(color)
+                        }
                     }
                     .frame(width: 150,alignment: .leading)
                     .padding(.leading)
@@ -46,5 +61,5 @@ struct CardExpense: View {
 }
 
 #Preview {
-    CardExpense(color: .blue,motivo: "Ingresos",monto: 40000, icono: "carrot.fill")
+    CardExpense(vmRegistros: RegistrosViewModel(), color: .blue,motivo: "Ingresos", icono: "carrot.fill")
 }
