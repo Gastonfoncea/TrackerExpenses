@@ -13,6 +13,7 @@ struct AhorrosView: View {
     @StateObject var tarjetasViewModel = TarjetasViewModel()
     @ObservedObject var vmRegistros: RegistrosViewModel
     @State var suma = 0
+    
     var body: some View {
         VStack{
             List{
@@ -34,7 +35,7 @@ struct AhorrosView: View {
                 .padding(.vertical, 16)
                 
                 ForEach(vmRegistros.fetchRegistros(tipo: .ahorros)) {registro in
-                    Text(String(registro.monto))
+                    ListItems(name: registro.detalle, motivo: registro.tipo, fecha: registro.fecha, monto: tarjetasViewModel.StringToInt(valor: registro.monto), color: Color.green)
                 }
                 .onDelete { indexSet in
                     for index in indexSet {
@@ -42,7 +43,9 @@ struct AhorrosView: View {
                         suma = vmRegistros.sumarRegistrosPorTipo(tipo: .ahorros)
                     }
                 }  
+                .listRowSeparator(.hidden)
             }
+            .listStyle(.plain)
             .scrollContentBackground(.hidden)
         }
         .onAppear{

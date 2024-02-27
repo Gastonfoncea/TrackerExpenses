@@ -16,7 +16,6 @@ struct RegistroPart2New: View {
     @StateObject var vmIngresos = IngresosViewModel()
     @StateObject var vmGastos = GastosViewModel()
     @StateObject var vmAhorros = AhorrosVIewModel()
-   // @StateObject var vmRegistro = RegistrosViewModel()
     var motivo: String
     @State var textFieldText: String = ""
     @State var date: Date = .now

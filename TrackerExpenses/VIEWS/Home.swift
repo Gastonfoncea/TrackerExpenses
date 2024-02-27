@@ -16,8 +16,7 @@ struct Home: View {
     @State var sumaIngresos = 0
     @State var sumaGastos = 0
     @State var sumaAhorros = 0
-    
-    
+
     var body: some View {
         NavigationView{
             VStack{
@@ -103,8 +102,6 @@ struct Home: View {
                                     ButtonPlus(color: .yellow)
                                 }
                             }
-                            
-                            Text("\(vmRegistros.sumaIngresos)")
                         }
                         .offset(y:-200)
                     }
