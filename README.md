@@ -1,1 +1,1 @@
-![Frame 70](https://github.com/Gastonfoncea/TrackerExpenses/assets/57188392/c4b3d54b-2bb3-4473-9cf8-1b8e65d24a8b)
+![Frame 70 (1)](https://github.com/Gastonfoncea/TrackerExpenses/assets/57188392/bd14c6e1-25a2-486e-83be-c65529d5568a)
