@@ -12,7 +12,5 @@ struct Apptheme {
     
     static let fontSizeSubTitles1: CGFloat = 20
     static let fontSizeSubTitles2: CGFloat = 17
-    
-    
-    
+ 
 }

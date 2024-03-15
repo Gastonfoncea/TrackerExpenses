@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5139805D2B96A79500A7FF42 /* ButtonWithIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5139805C2B96A79400A7FF42 /* ButtonWithIcon.swift */; };
+		5139805F2B96ABA800A7FF42 /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5139805E2B96ABA800A7FF42 /* SideMenuView.swift */; };
+		513980612B96ACEC00A7FF42 /* SideMenuHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513980602B96ACEC00A7FF42 /* SideMenuHeader.swift */; };
+		5139808C2B97F5A000A7FF42 /* SideMenuRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5139808B2B97F5A000A7FF42 /* SideMenuRowView.swift */; };
+		5139808E2B97F6F600A7FF42 /* SideMenuOptionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5139808D2B97F6F600A7FF42 /* SideMenuOptionModel.swift */; };
 		514D523A2B854E0900502A28 /* BackSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 514D52392B854E0900502A28 /* BackSpace.swift */; };
 		5150E11B2B7567CD00FD8976 /* CardExpense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5150E11A2B7567CD00FD8976 /* CardExpense.swift */; };
 		5150E11D2B756E5400FD8976 /* RegistroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5150E11C2B756E5400FD8976 /* RegistroView.swift */; };
@@ -45,6 +50,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5139805C2B96A79400A7FF42 /* ButtonWithIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonWithIcon.swift; sourceTree = "<group>"; };
+		5139805E2B96ABA800A7FF42 /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
+		513980602B96ACEC00A7FF42 /* SideMenuHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuHeader.swift; sourceTree = "<group>"; };
+		5139808B2B97F5A000A7FF42 /* SideMenuRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuRowView.swift; sourceTree = "<group>"; };
+		5139808D2B97F6F600A7FF42 /* SideMenuOptionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuOptionModel.swift; sourceTree = "<group>"; };
 		514D52392B854E0900502A28 /* BackSpace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackSpace.swift; sourceTree = "<group>"; };
 		5150E11A2B7567CD00FD8976 /* CardExpense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardExpense.swift; sourceTree = "<group>"; };
 		5150E11C2B756E5400FD8976 /* RegistroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistroView.swift; sourceTree = "<group>"; };
@@ -107,6 +117,10 @@
 				514D52392B854E0900502A28 /* BackSpace.swift */,
 				51A658B52B8814BF00B3D9C9 /* Engine.swift */,
 				51A658BB2B893A2100B3D9C9 /* WhiteCard.swift */,
+				5139805C2B96A79400A7FF42 /* ButtonWithIcon.swift */,
+				5139805E2B96ABA800A7FF42 /* SideMenuView.swift */,
+				513980602B96ACEC00A7FF42 /* SideMenuHeader.swift */,
+				5139808B2B97F5A000A7FF42 /* SideMenuRowView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -173,6 +187,7 @@
 				5150E1262B7593AA00FD8976 /* KeyboardButton.swift */,
 				5150E1282B75964200FD8976 /* Matrix.swift */,
 				51A658C62B8BE86200B3D9C9 /* DataSource.swift */,
+				5139808D2B97F6F600A7FF42 /* SideMenuOptionModel.swift */,
 			);
 			path = MODELS;
 			sourceTree = "<group>";
@@ -288,11 +303,14 @@
 				51A658BE2B893AE400B3D9C9 /* RegistrosViewModel.swift in Sources */,
 				5150E1272B7593AA00FD8976 /* KeyboardButton.swift in Sources */,
 				5150E11B2B7567CD00FD8976 /* CardExpense.swift in Sources */,
+				5139808E2B97F6F600A7FF42 /* SideMenuOptionModel.swift in Sources */,
+				513980612B96ACEC00A7FF42 /* SideMenuHeader.swift in Sources */,
 				51A0D49A2B743FEB00D83AA1 /* TrackerExpensesApp.swift in Sources */,
 				51A658C92B8C037400B3D9C9 /* ContentView.swift in Sources */,
 				51A0D4AE2B74444500D83AA1 /* Home.swift in Sources */,
 				5150E1292B75964200FD8976 /* Matrix.swift in Sources */,
 				5150E11F2B756EE300FD8976 /* RectangleHome.swift in Sources */,
+				5139808C2B97F5A000A7FF42 /* SideMenuRowView.swift in Sources */,
 				5150E13D2B7C00EC00FD8976 /* SumatoriaPrueba.swift in Sources */,
 				5150E1412B7D779B00FD8976 /* RegistroPart2New.swift in Sources */,
 				5150E1332B780A2F00FD8976 /* TextfieldGeneral.swift in Sources */,
@@ -300,12 +318,14 @@
 				51A658CD2B8C045B00B3D9C9 /* Profile.swift in Sources */,
 				51A658C72B8BE86200B3D9C9 /* DataSource.swift in Sources */,
 				5150E1392B7AF76B00FD8976 /* AhorrosView.swift in Sources */,
+				5139805F2B96ABA800A7FF42 /* SideMenuView.swift in Sources */,
 				5150E1252B758DFF00FD8976 /* ButtonPlus.swift in Sources */,
 				5150E1232B75737300FD8976 /* ListItems.swift in Sources */,
 				5150E12D2B77E8A500FD8976 /* ButtonGeneralNavigation.swift in Sources */,
 				5150E13B2B7BE7A600FD8976 /* TarjetasViewModel.swift in Sources */,
 				51A658CB2B8C03EF00B3D9C9 /* Historial.swift in Sources */,
 				51A658C52B89498300B3D9C9 /* Apptheme.swift in Sources */,
+				5139805D2B96A79500A7FF42 /* ButtonWithIcon.swift in Sources */,
 				5150E12F2B77F5DE00FD8976 /* ViewModelCalculadora.swift in Sources */,
 				51A658B82B8938E200B3D9C9 /* GastosViewModel.swift in Sources */,
 				51A0D4AC2B7441BD00D83AA1 /* Registros.swift in Sources */,

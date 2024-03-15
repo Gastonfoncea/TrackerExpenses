@@ -16,9 +16,11 @@ struct Home: View {
     @State var sumaIngresos = 0
     @State var sumaGastos = 0
     @State var sumaAhorros = 0
+    @State var showMenu = false
 
     var body: some View {
         NavigationView{
+        ZStack{
             VStack{
                 ZStack{
                     Color.accentColor1
@@ -56,8 +58,8 @@ struct Home: View {
                     .padding(.horizontal,30)
                     .offset(y:100)
                 }
-               .frame(height: 150)
-               
+                .frame(height: 150)
+                
                 ScrollView{
                     ZStack{
                         RoundedRectangle(cornerRadius: 20)
@@ -78,8 +80,8 @@ struct Home: View {
                                 NavigationLink(destination: IngresosView(vmRegistros: vmRegistros)) {
                                     CardExpense(vmRegistros: vmRegistros, color: .blue, motivo: "Ingresos",icono: "dock.arrow.down.rectangle")
                                 }
-                             
-                               
+                                
+                                
                                 NavigationLink(destination: RegistroView(vmRegistros: vmRegistros, motivo: "Ingresos")) { ButtonPlus(color: .blue)
                                 }
                             }
@@ -107,6 +109,29 @@ struct Home: View {
                     }
                 }
                 .offset(y:110)
+            }
+            
+            SideMenuView(isShowing: $showMenu)
+            
+            
+        }
+  
+            .navigationTitle("Home")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                
+                ToolbarItem(placement: .topBarTrailing) {
+                    ButtonWithIcon(icon: "gearshape") {
+                     
+                            
+                    }
+                }
+
+                ToolbarItem(placement:.topBarLeading){
+                    ButtonWithIcon(icon: "line.3.horizontal") {
+                        showMenu.toggle()
+                    }
+                }
             }
         }
         .onAppear{

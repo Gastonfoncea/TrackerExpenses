@@ -18,17 +18,20 @@ struct GastosView: View {
         VStack{
             List{
                 VStack{
-                    Text("$\(suma)")
-                        .font(.largeTitle)
-                        .bold()
+                    Text(tarjetasViewModel.getFormattedDate())
+                        .padding(.top,3)
+                        .font(.system(size: Apptheme.fontSizeSubTitles2))
+                        .foregroundStyle(.gray)
+                   
                     Text("Tus Gastos acumulados")
                         .padding(.top,3)
                         .font(.system(size: Apptheme.fontSizeSubTitles2))
                         .bold()
-                    Text(tarjetasViewModel.getFormattedDate())
-                        .padding(.top,3)
-                        .font(.system(size: Apptheme.fontSizeSubTitles2))
+                   
+                    Text("$\(suma)")
+                        .font(.largeTitle)
                         .bold()
+                        .padding(.top)
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
                 .listRowSeparator(.hidden, edges: .top)

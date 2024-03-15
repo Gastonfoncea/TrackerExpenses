@@ -35,6 +35,7 @@ class TarjetasViewModel: ObservableObject {
         return valorInt
         
     }
+ 
     
 }
 

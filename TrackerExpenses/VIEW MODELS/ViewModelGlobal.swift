@@ -14,4 +14,5 @@ class ViewModelGlobal: ObservableObject {
     /// 
     @Environment (\.dismiss) private var dismiss
     
+    
 }

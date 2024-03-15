@@ -58,22 +58,37 @@ class RegistrosViewModel: ObservableObject {
             ///Busqueda FetchDescriptor y predicate en la base de datos de SwiftData - Ingresos
             let ingresosPredicate = #Predicate<Registros> {  $0.tipo == "Ingresos" }
             let ingresosDescriptor = FetchDescriptor<Registros>(predicate: ingresosPredicate)
-            let ingresos = try! modelContext.fetch(ingresosDescriptor)
-            return ingresos
+            do{
+                let ingresos = try modelContext.fetch(ingresosDescriptor)
+                return ingresos
+            } catch {
+                print("No hay elementos en esta busqueda")
+                return []
+            }
             
         case .gastos:
             ///Busqueda FetchDescriptor y predicate en la base de datos de SwiftData - Gastos
             let gastosPredicate = #Predicate<Registros> { $0.tipo == "Gastos" }
             let gastosDescriptor = FetchDescriptor<Registros> (predicate: gastosPredicate)
-            let gastos = try! modelContext.fetch(gastosDescriptor)
-            return gastos
+            do{
+                let gastos = try modelContext.fetch(gastosDescriptor)
+                return gastos
+            } catch {
+                print("No hay elementos en esta busqueda")
+                return []
+            }
             
         case .ahorros:
             ///Busqueda FetchDescriptor y predicate en la base de datos de SwiftData - Ahorros
             let ahorrosPredicate = #Predicate<Registros> { $0.tipo == "Ahorros" }
             let ahorrosDescriptor = FetchDescriptor<Registros> (predicate: ahorrosPredicate)
-            let ahorros = try! modelContext.fetch(ahorrosDescriptor)
-            return ahorros
+            do{
+                let ahorros = try modelContext.fetch(ahorrosDescriptor)
+                return ahorros
+            } catch {
+                print("No hay elementos en esta busqueda")
+                return []
+            }
         }
     }
     
